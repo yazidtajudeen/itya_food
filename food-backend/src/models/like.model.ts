@@ -1,6 +1,6 @@
 import { Schema, model, Types } from "mongoose";
-
-const likeSchema = new Schema(
+import { LikeType } from "../types/like";
+const likeSchema = new Schema<LikeType>(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
     menuItemId: { type: Types.ObjectId, ref: "MenuItem", required: true },
@@ -8,4 +8,4 @@ const likeSchema = new Schema(
   { timestamps: true }
 );
 
-export const Like = model("Like", likeSchema);
+export const Like = model<LikeType>("Like", likeSchema);

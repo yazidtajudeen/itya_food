@@ -1,6 +1,7 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
+import { DeliveryType } from "../types/delivery.d";
 
-const deliverySchema = new Schema(
+const deliverySchema = new Schema<DeliveryType>(
   {
     orderId: { type: Types.ObjectId, ref: "Order", required: true },
     deliveryAgentId: { type: Types.ObjectId, ref: "User" },
@@ -18,4 +19,4 @@ const deliverySchema = new Schema(
   { timestamps: true }
 );
 
-export const Delivery = model("Delivery", deliverySchema);
+export const Delivery = model<DeliveryType>("Delivery", deliverySchema);

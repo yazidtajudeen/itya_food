@@ -1,6 +1,7 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
+import { PaymentType } from "../types/payment.d";
 
-const paymentSchema = new Schema(
+const paymentSchema = new Schema<PaymentType>(
   {
     orderId: { type: Types.ObjectId, ref: "Order", required: true },
     userId: { type: Types.ObjectId, ref: "User", required: true },
@@ -13,4 +14,4 @@ const paymentSchema = new Schema(
   { timestamps: true }
 );
 
-export const Payment = model("Payment", paymentSchema);
+export const Payment = model<PaymentType>("Payment", paymentSchema);

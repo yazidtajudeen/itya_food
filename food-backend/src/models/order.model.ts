@@ -1,6 +1,7 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
+import { OrderType } from "../types/order.d";
 
-const orderSchema = new Schema(
+const orderSchema = new Schema<OrderType>(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
     restaurantId: { type: Types.ObjectId, ref: "Restaurant", required: true },
@@ -21,4 +22,4 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-export const Order = model("Order", orderSchema);
+export const Order = model<OrderType>("Order", orderSchema);

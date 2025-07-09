@@ -1,6 +1,7 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
+import { ReviewType } from "../types/review.d";
 
-const reviewSchema = new Schema(
+const reviewSchema = new Schema<ReviewType>(
   {
     userId: { type: Types.ObjectId, ref: "User", required: true },
     restaurantId: { type: Types.ObjectId, ref: "Restaurant" },
@@ -11,4 +12,4 @@ const reviewSchema = new Schema(
   { timestamps: true }
 );
 
-export const Review = model("Review", reviewSchema);
+export const Review = model<ReviewType>("Review", reviewSchema);
