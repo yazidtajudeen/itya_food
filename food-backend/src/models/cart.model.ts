@@ -1,8 +1,9 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model,  Types } from "mongoose";
+import { CartType } from "../types/cart.d";
 
-const cartSchema = new Schema(
+const cartSchema = new Schema<CartType>(
   {
-    userId: { type: Types.ObjectId, ref: "User", required: true },
+    userId: { type: Types.ObjectId, ref: "User", required: true, unique: true },
     items: [
       {
         menuItemId: { type: Types.ObjectId, ref: "MenuItem" },
@@ -13,5 +14,4 @@ const cartSchema = new Schema(
   { timestamps: true }
 );
 
-export const Cart = model("Cart", cartSchema);
-
+export const Cart = model<CartType>("Cart", cartSchema);

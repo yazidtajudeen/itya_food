@@ -1,6 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, } from "mongoose";
+import { RestaurantType } from "../types/restaurant.d";
 
-const restaurantSchema = new Schema(
+const restaurantSchema = new Schema<RestaurantType>(
   {
     name: { type: String, required: true },
     description: { type: String },
@@ -11,4 +12,4 @@ const restaurantSchema = new Schema(
   { timestamps: true }
 );
 
-export const Restaurant = model("Restaurant", restaurantSchema);
+export const Restaurant = model<RestaurantType>("Restaurant", restaurantSchema);

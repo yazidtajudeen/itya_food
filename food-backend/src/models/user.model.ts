@@ -1,16 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-
-export interface Users extends Document {
-  username: string;
-  email: string;
-  password: string;
-  authentication?: {
-    token?: string;
-    tokenExpires?: Date;
-    salt?: string;
-  };
-}
-
+import { Users } from "../types/user";
 const userSchema = new Schema<Users>(
   {
     username: {
@@ -44,7 +33,7 @@ const userSchema = new Schema<Users>(
     },
   },
   { timestamps: true }
-);
+); 
 
 userSchema.index({ username: 1 });
 userSchema.index({ email: 1 });

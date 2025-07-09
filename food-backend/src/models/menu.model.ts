@@ -1,7 +1,7 @@
+import { Schema, model, Document, Types } from "mongoose";
+import { MenuItemType } from "../types/menu";
 
-import { Schema, model, Types } from "mongoose";
-
-const menuItemSchema = new Schema(
+const menuItemSchema = new Schema<MenuItemType>(
   {
     name: { type: String, required: true },
     description: String,
@@ -14,4 +14,4 @@ const menuItemSchema = new Schema(
   { timestamps: true }
 );
 
-export const MenuItem = model("MenuItem", menuItemSchema);
+export const MenuItem = model<MenuItemType>("MenuItem", menuItemSchema);
