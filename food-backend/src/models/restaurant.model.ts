@@ -1,4 +1,3 @@
-// models/restaurant.model.ts
 import { Schema, model } from "mongoose";
 
 const restaurantSchema = new Schema(

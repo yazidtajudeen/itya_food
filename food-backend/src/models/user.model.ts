@@ -1,13 +1,17 @@
-
 import { Schema, model, Document } from "mongoose";
 
-export interface IUser extends Document {
+export interface Users extends Document {
   username: string;
   email: string;
   password: string;
+  authentication?: {
+    token?: string;
+    tokenExpires?: Date;
+    salt?: string;
+  };
 }
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<Users>(
   {
     username: {
       type: String,
@@ -22,16 +26,27 @@ const userSchema = new Schema<IUser>(
       required: true,
       unique: true,
       lowercase: true,
-      match: [/\S+@\S+\.\S+/, "is invalid"],
+      match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/, "is invalid"],
     },
     password: {
       type: String,
       required: true,
       minlength: 6,
-      select: false, 
+      select: false,
+    },
+    authentication: {
+      type: {
+        token: { type: String, select: false },
+        tokenExpires: { type: Date, select: false },
+        salt: { type: String, select: false },
+      },
+      required: false,
     },
   },
   { timestamps: true }
 );
 
-export const User = model<IUser>("User", userSchema);
+userSchema.index({ username: 1 });
+userSchema.index({ email: 1 });
+
+export const User = model<Users>("User", userSchema);
