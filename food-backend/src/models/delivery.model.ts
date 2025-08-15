@@ -1,22 +1,24 @@
 import { Schema, model, Document, Types } from "mongoose";
-import { DeliveryType } from "../types/delivery.d";
+import { Deliveries } from "../types/delivery.d";
+import { Users } from "../types/user.d";
+import { Orders } from "../types/order.d";
 
-const deliverySchema = new Schema<DeliveryType>(
+const deliverySchema = new Schema<Deliveries>(
   {
-    orderId: { type: Types.ObjectId, ref: "Order", required: true },
-    deliveryAgentId: { type: Types.ObjectId, ref: "User" },
+    orderId: { type: Schema.Types.ObjectId, ref: "Order", required: true },
+    deliveryAgentId: { type: Schema.Types.ObjectId, ref: "User" },
     status: {
       type: String,
       enum: ["pending", "picked", "on_the_way", "delivered"],
       default: "pending",
     },
     location: {
-      lat: Number,
-      lng: Number,
+      lat: { type: Number, required: true },
+      lng: { type: Number, required: true },
     },
-    estimatedTime: Date,
+    estimatedTime: { type: Date },
   },
   { timestamps: true }
 );
 
-export const Delivery = model<DeliveryType>("Delivery", deliverySchema);
+export const Delivery = model<Deliveries>("Delivery", deliverySchema);

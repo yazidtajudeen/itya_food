@@ -1,0 +1,9 @@
+import './auth.controller';
+import './delivery.controller';
+import './menu.controller';
+import './order.controller';
+import './restaurant.controller';
+import './user.controller';
+import './cart.controller';
+import './reservation.controller';
+import './wallet.controller';

@@ -10,3 +10,14 @@ export interface Users extends Document {
     };
   }
   
+  export interface userInput {
+    username?: string;
+    email: string;
+    password: string;
+  }
+  
+  export interface userLoginInput {
+    email: string;
+    password: string;
+  }
+  

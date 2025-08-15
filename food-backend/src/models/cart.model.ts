@@ -1,17 +1,27 @@
-import { Schema, model,  Types } from "mongoose";
-import { CartType } from "../types/cart.d";
+import { Schema, model, Document, Types } from "mongoose";
+import { Carts } from "../types/cart.d";
+import { Users } from "../types/user.d";
+import { MenuItemType } from "../types/menu.d";
 
-const cartSchema = new Schema<CartType>(
+const cartSchema = new Schema<Carts>(
   {
-    userId: { type: Types.ObjectId, ref: "User", required: true, unique: true },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     items: [
       {
-        menuItemId: { type: Types.ObjectId, ref: "MenuItem" },
-        quantity: { type: Number, default: 1 },
+        menuItemId: {
+          type: Schema.Types.ObjectId,
+          ref: "MenuItem",
+          required: true,
+        },
+        quantity: { type: Number, required: true, min: 1 },
       },
     ],
   },
   { timestamps: true }
 );
 
-export const Cart = model<CartType>("Cart", cartSchema);
+export const Cart = model<Carts>("Cart", cartSchema);
