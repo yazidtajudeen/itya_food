@@ -8,6 +8,7 @@ class AppTheme{
     scaffoldBackgroundColor: Colors.white,
     textTheme: GoogleFonts.poppinsTextTheme(
       
+      
     ).copyWith(
       headlineSmall: GoogleFonts.abhayaLibre(
         fontSize: 24,
