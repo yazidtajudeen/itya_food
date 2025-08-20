@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class LocateRestaurant extends StatefulWidget {
   const LocateRestaurant({super.key});
 

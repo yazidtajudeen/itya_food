@@ -45,7 +45,6 @@ dependencies:
   cached_network_image: ^3.4.1
   sentry_flutter: ^9.1.0
   shimmer_effect: ^1.0.4
-  auto_route: ^10.1.0+1
   google_fonts: ^6.2.1
 
 dev_dependencies:
