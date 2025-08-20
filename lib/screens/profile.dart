@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_route/auto_route.dart';
+@RoutePage()      
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -13,3 +14,4 @@ class _ProfileState extends State<Profile> {
     return Scaffold(body: Column(children: [],),);
   }
 }
+  

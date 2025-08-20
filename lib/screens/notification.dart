@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
+import 'package:auto_route/auto_route.dart';
+@RoutePage()    
+class NotificationRoute extends StatefulWidget {
+  const NotificationRoute({super.key});
 
   @override
-  State<NotificationScreen> createState() => _NotificationScreenState();
+  State<NotificationRoute> createState() => _NotificationRouteState();
 }
 
-class _NotificationScreenState extends State<NotificationScreen> {
+class _NotificationRouteState extends State<NotificationRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Column(children: [],),);
   }
-}
+} 

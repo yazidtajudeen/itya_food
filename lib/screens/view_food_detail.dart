@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_route/auto_route.dart';
+@RoutePage()  
 class ViewFoodDetail extends StatefulWidget {
   const ViewFoodDetail({super.key});
 
@@ -12,4 +13,4 @@ class _ViewFoodDetailState extends State<ViewFoodDetail> {
   Widget build(BuildContext context) {
     return Scaffold(body: Column(children: [],),);
   }
-}
+}     

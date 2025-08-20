@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_route/auto_route.dart';
+@RoutePage()  
 class LocateRestaurant extends StatefulWidget {
   const LocateRestaurant({super.key});
 

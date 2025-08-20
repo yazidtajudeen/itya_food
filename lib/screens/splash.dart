@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+@RoutePage()
  class Splash extends StatefulWidget {
    const Splash({super.key});
  

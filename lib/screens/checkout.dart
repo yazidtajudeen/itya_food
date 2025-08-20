@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_route/auto_route.dart';
+@RoutePage()
 class Checkout extends StatefulWidget {
   const Checkout({super.key});
 
