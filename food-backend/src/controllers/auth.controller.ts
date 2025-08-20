@@ -1,29 +1,50 @@
-import { Request, Response, NextFunction, RequestHandler } from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import * as users from "../repositories/user.repository";
+import { Request, Response } from 'express';
+import { AuthService } from '../services/auth.service';
 
-export const register: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const { username, email, password } = req.body;
-		const existing = await users.getUserByEmail(email);
-		if (existing) { res.status(409).json({ message: "Email already in use" }); return; }
-		const hashed = await bcrypt.hash(password, 10);
-		const user = await users.createUser({ username, email, password: hashed } as any);
-		res.status(201).json({ id: user._id, username: user.username, email: user.email });
-		return;
-	} catch (err) { next(err); }
+export const register = async (req: Request, res: Response) => {
+  try {
+    const user = await AuthService.register(req.body);
+    res.status(201).json(user);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
 };
 
-export const login: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const { email, password } = req.body;
-		const user = await users.getUserWithPasswordByEmail(email);
-		if (!user) { res.status(401).json({ message: "Invalid credentials" }); return; }
-		const ok = await bcrypt.compare(password, (user as any).password);
-		if (!ok) { res.status(401).json({ message: "Invalid credentials" }); return; }
-		const token = jwt.sign({ sub: (user as any)._id, email: (user as any).email }, process.env.JWT_SECRET || "secret", { expiresIn: "7d" });
-		res.json({ token });
-		return;
-	} catch (err) { next(err); }
+export const login = async (req: Request, res: Response) => {
+  try {
+    const token = await AuthService.login(req.body);
+    res.status(200).json({ token });
+  } catch (error: any) {
+    res.status(401).json({ message: error.message });
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    await AuthService.generateResetToken(email);
+    res.status(200).json({ message: 'Password reset email sent.' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const verifyPasswordResetCode = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body;
+    await AuthService.verifyResetToken(token);
+    res.status(200).json({ message: 'Token verified successfully.' });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { token, newPassword } = req.body;
+    await AuthService.resetPassword(token, newPassword);
+    res.status(200).json({ message: 'Password has been reset.' });
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
 };

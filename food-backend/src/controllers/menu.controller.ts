@@ -1,69 +1,73 @@
-import { Request, Response, NextFunction, RequestHandler } from "express";
-import * as menus from "../repositories/menu.repository";
+import { Request, Response } from 'express';
+import { MenuRepository } from '../repositories/menu.repository';
 
-export const create: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const item = await menus.createMenuItem(req.body);
-		res.status(201).json(item);
-		return;
-	} catch (err) { next(err); }
+export const createMenuItem = async (req: Request, res: Response) => {
+  try {
+    const menuItem = await MenuRepository.createMenuItem(req.body);
+    res.status(201).json(menuItem);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const getById: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const item = await menus.getMenuItemById(req.params.id);
-		if (!item) { res.status(404).json({ message: "Menu item not found" }); return; }
-		res.json(item);
-		return;
-	} catch (err) { next(err); }
+export const getMenuItemById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const menuItem = await MenuRepository.getMenuItemByIdWithRestaurant(id);
+    if (!menuItem) {
+      return res.status(404).json({ message: 'Menu item not found' });
+    }
+    res.status(200).json(menuItem);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const list: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const { category, minPrice, maxPrice } = req.query as any;
-		const filter: any = {};
-		if (category) filter.category = String(category);
-		if (minPrice !== undefined || maxPrice !== undefined) {
-			filter.price = {} as any;
-			if (minPrice !== undefined) (filter.price as any).$gte = Number(minPrice);
-			if (maxPrice !== undefined) (filter.price as any).$lte = Number(maxPrice);
-		}
-		const result = await menus.listMenuItems(filter);
-		res.json(result);
-		return;
-	} catch (err) { next(err); }
+export const getMenuItemsByRestaurant = async (req: Request, res: Response) => {
+  try {
+    const { restaurantId } = req.params;
+    const menuItems = await MenuRepository.getMenuItemsByRestaurant(restaurantId);
+    res.status(200).json(menuItems);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const listByRestaurant: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const { category, minPrice, maxPrice } = req.query as any;
-		const result = await menus.listMenuItemsByRestaurant(
-			req.params.restaurantId,
-			{
-				category: category ? String(category) : undefined,
-				minPrice: minPrice !== undefined ? Number(minPrice) : undefined,
-				maxPrice: maxPrice !== undefined ? Number(maxPrice) : undefined,
-			}
-		);
-		res.json(result);
-		return;
-	} catch (err) { next(err); }
+export const updateMenuItem = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const updatedMenuItem = await MenuRepository.updateMenuItem(id, req.body);
+    if (!updatedMenuItem) {
+      return res.status(404).json({ message: 'Menu item not found' });
+    }
+    res.status(200).json(updatedMenuItem);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const update: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const updated = await menus.updateMenuItemById(req.params.id, req.body);
-		if (!updated) { res.status(404).json({ message: "Menu item not found" }); return; }
-		res.json(updated);
-		return;
-	} catch (err) { next(err); }
+export const deleteMenuItem = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedMenuItem = await MenuRepository.deleteMenuItem(id);
+    if (!deletedMenuItem) {
+      return res.status(404).json({ message: 'Menu item not found' });
+    }
+    res.status(200).json({ message: 'Menu item deleted successfully' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
-export const remove: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const deleted = await menus.deleteMenuItemById(req.params.id);
-		if (!deleted) { res.status(404).json({ message: "Menu item not found" }); return; }
-		res.status(204).send();
-		return;
-	} catch (err) { next(err); }
+export const searchMenuItems = async (req: Request, res: Response) => {
+  try {
+    const { query, restaurantId } = req.query;
+    if (!query || typeof query !== 'string') {
+      return res.status(400).json({ message: 'Search query is required and must be a string' });
+    }
+    const menuItems = await MenuRepository.searchMenuItems(query, restaurantId as string);
+    res.status(200).json(menuItems);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
 };

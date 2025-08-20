@@ -23,4 +23,14 @@ export class RestaurantRepository {
   static async deleteRestaurant(restaurantId: string) {
     return await Restaurant.findByIdAndDelete(restaurantId);
   }
+
+  static async searchRestaurants(query: string): Promise<Restaurants[]> {
+    const searchRegex = new RegExp(query, 'i');
+    return await Restaurant.find({
+      $or: [
+        { name: searchRegex },
+        { description: searchRegex },
+      ],
+    });
+  }
 }

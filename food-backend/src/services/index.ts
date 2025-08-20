@@ -5,3 +5,5 @@ export * from './menu.service';
 export * from './order.service';
 export * from './restaurant.service';
 export * from './user.service';
+export * from './like.service';
+export * from './review.service';

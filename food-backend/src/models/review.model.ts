@@ -1,13 +1,14 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { ReviewType } from "../types/review.d";
 
 const reviewSchema = new Schema<ReviewType>(
   {
-    userId: { type: Types.ObjectId, ref: "User", required: true },
-    restaurantId: { type: Types.ObjectId, ref: "Restaurant" },
-    menuItemId: { type: Types.ObjectId, ref: "MenuItem" },
-    rating: { type: Number, min: 1, max: 5 },
-    comment: String,
+    restaurantId: { type: Types.ObjectId, ref: "Restaurant", required: true },
+    reviewerName: { type: String, required: true },
+    reviewerAvatar: { type: String },
+    text: { type: String, required: true },
+    rating: { type: Number, required: true, min: 1, max: 5 },
+    date: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

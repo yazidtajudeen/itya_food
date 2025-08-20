@@ -1,7 +1,7 @@
 import { Schema, model, } from "mongoose";
-import { RestaurantType } from "../types/restaurant.d";
+import { Restaurants} from "../types/restaurant.d";
 
-const restaurantSchema = new Schema<RestaurantType>(
+const restaurantSchema = new Schema<Restaurants>(
   {
     name: { type: String, required: true },
     description: { type: String },
@@ -31,4 +31,4 @@ const restaurantSchema = new Schema<RestaurantType>(
 
 restaurantSchema.index({ location: '2dsphere' });
 
-export const Restaurant = model<RestaurantType>("Restaurant", restaurantSchema);
+export const Restaurant = model<Restaurants>("Restaurant", restaurantSchema);

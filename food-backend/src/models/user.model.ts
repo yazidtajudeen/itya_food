@@ -1,38 +1,20 @@
-import { Schema, model, Document } from "mongoose";
-import { Users } from "../types/user";
+import { Schema, model } from "mongoose";
+import { Users } from "../types/user.d";
+
 const userSchema = new Schema<Users>(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      minlength: 3,
-      maxlength: 30,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      lowercase: true,
-      match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/, "is invalid"],
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-      select: false,
-    },
+    username: { type: String, required: true, unique: true, trim: true },
+    email: { type: String, required: true, unique: true, trim: true },
+    password: { type: String, required: true, minlength: 6 },
     authentication: {
-      type: {
-        token: { type: String, select: false },
-        tokenExpires: { type: Date, select: false },
-        salt: { type: String, select: false },
-      },
-      required: false,
+      token: { type: String },
+      tokenExpires: { type: Date },
+      salt: { type: String },
     },
+    resetPasswordToken: { type: String },
+    resetPasswordExpires: { type: Date },
   },
   { timestamps: true }
-); 
+);
 
 export const User = model<Users>("User", userSchema);

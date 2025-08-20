@@ -1,4 +1,4 @@
-import { Schema, model, Document, Types } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { MenuItemType } from "../types/menu";
 
 const menuItemSchema = new Schema<MenuItemType>(

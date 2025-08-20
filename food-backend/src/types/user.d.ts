@@ -8,6 +8,8 @@ export interface Users extends Document {
       tokenExpires?: Date;
       salt?: string;
     };
+    resetPasswordToken?: string;
+    resetPasswordExpires?: Date;
   }
   
   export interface userInput {

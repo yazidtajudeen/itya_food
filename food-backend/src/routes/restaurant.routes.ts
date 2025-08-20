@@ -1,14 +1,14 @@
 import { Router } from "express";
-import * as controller from "../controllers/restaurant.controller";
+import { createRestaurant, getRestaurantById, getAllRestaurants, updateRestaurant, deleteRestaurant, searchRestaurants } from "../controllers/restaurant.controller";
+import asyncHandler from "../utils/asyncHandler";
 
 const router = Router();
 
-router.post("/restaurants", controller.create);
-router.get("/restaurants", controller.list);
-router.get("/restaurants-with-menus", controller.listWithMenus);
-router.get("/restaurants/:id", controller.getById);
-router.get("/restaurants/:id/with-menu", controller.getWithMenu);
-router.put("/restaurants/:id", controller.update);
-router.delete("/restaurants/:id", controller.remove);
+router.post("/", asyncHandler(createRestaurant));
+router.get("/:id", asyncHandler(getRestaurantById));
+router.get("/", asyncHandler(getAllRestaurants));
+router.get("/search", asyncHandler(searchRestaurants));
+router.put("/:id", asyncHandler(updateRestaurant));
+router.delete("/:id", asyncHandler(deleteRestaurant));
 
 export default router;

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express';
-
 export class HttpError extends Error {
 	status: number;
 	code?: string;
@@ -11,7 +10,7 @@ export class HttpError extends Error {
 }
 
 export const errorHandler: ErrorRequestHandler = (err: any, _req: Request, res: Response, _next: NextFunction): void => {
-	// Mongoose validation error -> 400 with details
+	
 	if (err?.name === 'ValidationError') {
 		const details: Record<string, string> = {};
 		Object.keys(err.errors || {}).forEach((key) => {
@@ -29,7 +28,6 @@ export const errorHandler: ErrorRequestHandler = (err: any, _req: Request, res: 
 	const code = err?.code || undefined;
 	const message = status >= 500 ? 'Internal Server Error' : err?.message || 'Bad Request';
 	if (process.env.NODE_ENV !== 'production') {
-		// eslint-disable-next-line no-console
 		console.error(err);
 	}
 	res.status(status).json({ error: { message, code, status } });
