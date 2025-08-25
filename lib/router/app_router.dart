@@ -7,7 +7,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(page: Splash.page, initial: true),
     AutoRoute(page: AddressManagement.page),
-    AutoRoute(page: PrivacyPermissions.page), // Corrected
+    AutoRoute(page: PrivacyPermissions.page), 
     AutoRoute(page: HelpFaq.page),
     AutoRoute(page: NotificationRoute.page),
     AutoRoute(page: Profile.page),
@@ -23,7 +23,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: LocateRestaurant.page),
     AutoRoute(page: Search.page),
     AutoRoute(page: Home.page),
-    AutoRoute(page: SuccessfullyReset.page), // Corrected
+    AutoRoute(page: SuccessfullyReset.page), 
     AutoRoute(page: VerificationCode.page),
     AutoRoute(page: SetNewPassword.page),
     AutoRoute(page: ForgotPassword.page),
